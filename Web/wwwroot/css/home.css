@@ -1,0 +1,86 @@
+﻿/* Reset */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Header */
+#welcome {
+    margin-bottom: 20px;
+}
+
+/* Button nhóm trên */
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    background: #4CAF50;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    button:hover {
+        background: #45a049;
+    }
+
+    /* Nút logout riêng */
+    button:last-of-type {
+        background: #ff4d4d;
+    }
+
+        button:last-of-type:hover {
+            background: #e60000;
+        }
+
+/* Content box */
+#content {
+    margin-top: 20px;
+    display: inline-block;
+    text-align: left;
+    width: 350px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+    /* Locker item */
+    #content div {
+        border-radius: 8px;
+        margin: 8px 0;
+        padding: 10px;
+        transition: 0.2s;
+    }
+
+        /* Available */
+        #content div[onclick] {
+            background: #d4edda;
+            cursor: pointer;
+        }
+
+            #content div[onclick]:hover {
+                background: #b7e4c7;
+            }
+
+        /* In use */
+        #content div:not([onclick]) {
+            background: #f8d7da;
+        }
+
+        /* History item */
+        #content div[style*="border"] {
+            border: 1px solid #ccc !important;
+            background: #fafafa !important;
+        }
+
+/* Timer */
+#timer {
+    color: red;
+    font-weight: bold;
+}

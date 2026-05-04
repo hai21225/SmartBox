@@ -1,5 +1,7 @@
-﻿const BASE_URL = "http://localhost:5033";
+﻿//const BASE_URL = "http://localhost:5033";
+const BASE_URL = "http://52.184.80.181:5033";
 
+let countdownInterval = null;
 function showResult(data) {
     document.getElementById("result").textContent = JSON.stringify(data, null, 2);
 }
@@ -75,6 +77,13 @@ function showPickup() {
 }
 
 function goBack() {
+
+    // 🔥 reset timer khi quay lại
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
     document.getElementById("main").style.display = "block";
     document.getElementById("content").innerHTML = "";
 }
@@ -98,7 +107,12 @@ async function submitCode() {
 
     const data = await res.json();
 
-    let timeLeft = 100;
+    // 🔥 clear timer cũ
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+
+    let timeLeft = 10;
 
     document.getElementById("content").innerHTML = `
         <h3>Thanh toán</h3>
@@ -109,12 +123,14 @@ async function submitCode() {
         <button onclick="goBack()">⬅ Quay lại</button>
     `;
 
-    const interval = setInterval(() => {
+    countdownInterval = setInterval(() => {
         timeLeft--;
         document.getElementById("timer").innerText = `Hết hạn sau: ${timeLeft}s`;
 
         if (timeLeft <= 0) {
-            clearInterval(interval);
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+
             alert("Hết hạn, nhập lại code");
             showPickup();
         }
@@ -122,8 +138,14 @@ async function submitCode() {
 }
 async function payByCode(code) {
 
+    // 🔥 clear timer khi thanh toán
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
     alert("Thanh toán thành công");
-    // 2. kết thúc usage
+
     let resEnd = await fetch(`${BASE_URL}/api/Usage/end-by-code?code=${code}`, {
         method: "POST"
     });

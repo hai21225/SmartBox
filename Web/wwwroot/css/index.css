@@ -1,0 +1,85 @@
+﻿/* Reset cơ bản */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Container chính */
+#main, #content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 320px;
+    margin-top: 20px;
+}
+
+/* Tiêu đề */
+h2, h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+/* Input */
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.2s;
+}
+
+    input:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    }
+
+/* Button */
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #4CAF50;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+    button:hover {
+        background: #45a049;
+    }
+
+    /* Nút riêng cho quay lại */
+    button:last-child {
+        background: #ccc;
+        color: black;
+    }
+
+        button:last-child:hover {
+            background: #bbb;
+        }
+
+/* Nút Nhận đồ */
+body > button {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+/* Result box */
+#result {
+    margin-top: 20px;
+    background: #1e1e1e;
+    color: #00ffcc;
+    padding: 10px;
+    border-radius: 8px;
+    width: 320px;
+    overflow-x: auto;
+    font-size: 12px;
+}

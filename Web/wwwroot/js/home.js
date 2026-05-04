@@ -1,9 +1,12 @@
-﻿const BASE_URL = "http://localhost:5033";
-
+﻿//const BASE_URL = "http://localhost:5033";
+const BASE_URL = "http://52.184.80.181:5033";
 const user = JSON.parse(localStorage.getItem("user"));
 if (!user) window.location.href = "index.html";
 
 document.getElementById("welcome").innerText = `Hello ${user.userName}`;
+
+
+let countdownInterval = null;
 
 function logout() {
     localStorage.removeItem("user");
@@ -64,6 +67,10 @@ async function loadHistory() {
 
 // 🔓 MỞ / KẾT THÚC
 async function loadMyLocker() {
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
     const res = await fetch(`${BASE_URL}/api/Usage`);
     const list = await res.json();
 
@@ -104,6 +111,11 @@ async function calculatePrice(lockerId) {
     const res = await fetch(`${BASE_URL}/api/Usage/calculate/${lockerId}`);
     const data = await res.json();
 
+    // 🔥 clear timer cũ nếu có
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+
     let timeLeft = 10;
 
     document.getElementById("content").innerHTML = `
@@ -113,19 +125,28 @@ async function calculatePrice(lockerId) {
         <button onclick="pay(${lockerId})">Thanh toán</button>
     `;
 
-    const interval = setInterval(() => {
+    countdownInterval = setInterval(() => {
         timeLeft--;
         document.getElementById("timer").innerText = `Hết hạn sau: ${timeLeft}s`;
 
         if (timeLeft <= 0) {
-            clearInterval(interval);
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+
             alert("Hết hạn, vui lòng tính lại");
             loadMyLocker();
         }
     }, 1000);
 }
 async function pay(lockerId) {
-    alert("Thanh toán thành công ");
+
+    // 🔥 clear timer khi thanh toán
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+        countdownInterval = null;
+    }
+
+    alert("Thanh toán thành công");
 
     const res = await fetch(`${BASE_URL}/api/Usage/end?lockerId=${lockerId}`, {
         method: "POST"
